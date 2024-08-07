@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private HashMap<Integer, User> users = new HashMap<>();
+    private final HashMap<Integer, User> users = new HashMap<>();
     private int id = 0;
 
     @PostMapping // эндпоинт добавления пользователя
@@ -48,8 +49,8 @@ public class UserController {
             throw new ValidationException("Неккоретный email");
         }
         if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
-           throw new ValidationException("Неккоректный логин");
-         }
+            throw new ValidationException("Неккоректный логин");
+        }
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
             log.info("Имя пользователя с идентификатором '{}' было установлена на '{}'", user.getId(), user.getLogin());
