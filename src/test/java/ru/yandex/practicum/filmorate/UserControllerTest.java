@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
 
-@SpringBootTest
 public class UserControllerTest {
     private final UserController userController = new UserController();
     private final User user = new User(1, "mtv.52@ya.ru", "user", "user", LocalDate.of(1999, 07, 16));

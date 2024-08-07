@@ -48,9 +48,9 @@ public class UserController {
         if (!user.getEmail().contains("@")) {
             throw new ValidationException("Неккоретный email");
         }
-        //if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
-        //    throw new ValidationException("Неккоректный логин");
-        // }
+        if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
+           throw new ValidationException("Неккоректный логин");
+         }
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
             log.info("Имя пользователя с идентификатором '{}' было установлена на '{}'", user.getId(), user.getLogin());
