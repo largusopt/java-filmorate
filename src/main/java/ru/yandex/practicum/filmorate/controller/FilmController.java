@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
-@RestController //создала класс контроллер
+@RestController //создала класс контроллерmk
 @RequestMapping("/films")
 public class FilmController {
 
