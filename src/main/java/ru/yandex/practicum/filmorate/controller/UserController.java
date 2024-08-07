@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
@@ -18,7 +19,7 @@ public class UserController {
     private int id = 0;
 
     @PostMapping // эндпоинт добавления пользователя
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         userValidation(user);
         user.setId(++id);
         users.put(user.getId(), user);
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PutMapping //эндпоинт обновления
-    public User update(@RequestBody User user) {
+    public User update(@Valid @RequestBody User user) {
         if (users.containsKey(user.getId())) {
             userValidation(user);
             users.put(user.getId(), user);
@@ -45,17 +46,17 @@ public class UserController {
     }
 
     public void userValidation(User user) {
-        if (user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@")) {
+        if (!user.getEmail().contains("@")) {
             throw new ValidationException("Неккоретный email");
         }
-        if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
-            throw new ValidationException("Неккоректный логин");
-        }
+        //if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
+        //    throw new ValidationException("Неккоректный логин");
+        // }
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
             log.info("Имя пользователя с идентификатором '{}' было установлена на '{}'", user.getId(), user.getLogin());
         }
-        if (user.getBirthday().isAfter(LocalDate.now()) || user.getBirthday() == null) {
+        if (user.getBirthday() == null) {
             throw new ValidationException("Неккоретная дата рождения");
         }
     }
