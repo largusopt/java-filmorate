@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/films")
 public class FilmController {
 
-    private HashMap<Integer, Film> films = new HashMap<>();
+    private final HashMap<Integer, Film> films = new HashMap<>();
     private int id = 0;
 
     @PostMapping // эндпоинт добавления фильма
@@ -48,8 +48,8 @@ public class FilmController {
 
     public void filmValidation(Film film) {
         if (film.getName().isEmpty() || film.getName().isBlank()) {
-         throw new ValidationException("Невозможно добавить фильм без названия");
-        }// я не поняла как примениь аннотацию NotBank, но я старалась ))
+            throw new ValidationException("Невозможно добавить фильм без названия");
+        }// я применила аннотацию,но как сдлеать так, чтобы в аннотации выбрасывалась ошибка и тесты это показывали?Я добавила текст ош-ки в с-ние,но тесты показывают,что ошибка не выбрасывается если удалить эти проверки.
         if (film.getDescription().length() > 200 || film.getDescription().length() == 0) {
             throw new ValidationException("Описание должно быть не более 200 символов/ не может быть равно 0");
         }
@@ -58,7 +58,7 @@ public class FilmController {
         }
         if (film.getDuration() <= 0) {
             throw new ValidationException("Продолжительность фильма должна быть положительной");
-         }
+        }
     }
 }
 
