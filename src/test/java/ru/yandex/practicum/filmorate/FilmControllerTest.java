@@ -21,7 +21,7 @@ public class FilmControllerTest {
     }
 
     @Test
-    void update_shouldUpdateUser() {
+    void update_shouldUpdateUsers() {
         Film thisFilm = new Film(1, "films", "part1", LocalDate.of(1999, 07, 16), 120);
         filmController.create(film);
         filmController.update(thisFilm);
