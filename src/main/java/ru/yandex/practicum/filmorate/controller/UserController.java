@@ -1,11 +1,11 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final HashMap<Integer, User> users = new HashMap<>();
+    private HashMap<Integer, User> users = new HashMap<>();
     private int id = 0;
 
     @PostMapping // эндпоинт добавления пользователя
-    public User create(@Valid @RequestBody User user) {
+    public User create(@RequestBody User user) {
         userValidation(user);
         user.setId(++id);
         users.put(user.getId(), user);
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PutMapping //эндпоинт обновления
-    public User update(@Valid @RequestBody User user) {
+    public User update(@RequestBody User user) {
         if (users.containsKey(user.getId())) {
             userValidation(user);
             users.put(user.getId(), user);
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     public void userValidation(User user) {
-        if (!user.getEmail().contains("@")) {
+        if (user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@")) {
             throw new ValidationException("Неккоретный email");
         }
         if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
@@ -55,9 +55,8 @@ public class UserController {
             user.setName(user.getLogin());
             log.info("Имя пользователя с идентификатором '{}' было установлена на '{}'", user.getId(), user.getLogin());
         }
-        if (user.getBirthday() == null) {
+        if (user.getBirthday().isAfter(LocalDate.now()) || user.getBirthday() == null) {
             throw new ValidationException("Неккоретная дата рождения");
         }
     }
 }
-

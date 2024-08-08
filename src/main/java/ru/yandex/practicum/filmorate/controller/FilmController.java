@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
@@ -12,15 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
-@RestController //создала класс контроллерmk
+@RestController //создала класс контроллер
 @RequestMapping("/films")
 public class FilmController {
 
-    private final HashMap<Integer, Film> films = new HashMap<>();
+    private HashMap<Integer, Film> films = new HashMap<>();
     private int id = 0;
 
     @PostMapping // эндпоинт добавления фильма
-    public Film create(@Valid @RequestBody Film film) { //я не смогла добавить почему то @Valid
+    public Film create(@RequestBody Film film) {
         filmValidation(film);
         film.setId(++id);
         films.put(film.getId(), film);
@@ -29,7 +28,7 @@ public class FilmController {
     }
 
     @PutMapping //эндпоинт обновления
-    public Film update(@Valid @RequestBody Film film) {
+    public Film update(@RequestBody Film film) {
         if (films.containsKey(film.getId())) {
             filmValidation(film);
             films.put(film.getId(), film);
@@ -49,7 +48,7 @@ public class FilmController {
     public void filmValidation(Film film) {
         if (film.getName().isEmpty() || film.getName().isBlank()) {
             throw new ValidationException("Невозможно добавить фильм без названия");
-        } // я применила аннотацию,но как сдлеать так, чтобы в аннотации выбрасывалась ошибка и тесты это показывали?Я добавила текст ош-ки в с-ние,но тесты показывают,что ошибка не выбрасывается если удалить эти проверки.
+        }
         if (film.getDescription().length() > 200 || film.getDescription().length() == 0) {
             throw new ValidationException("Описание должно быть не более 200 символов/ не может быть равно 0");
         }
