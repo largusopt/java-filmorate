@@ -47,17 +47,11 @@ public class FilmController {
     }
 
     public void filmValidation(Film film) {
-        if (film.getName().isEmpty() || film.getName().isBlank()) {
-            throw new ValidationException("Невозможно добавить фильм без названия");
-        }
         if (film.getDescription().length() > 200 || film.getDescription().length() == 0) {
             throw new ValidationException("Описание должно быть не более 200 символов/ не может быть равно 0");
         }
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             throw new ValidationException("Некоретная дата фильма");
-        }
-        if (film.getDuration() <= 0) {
-            throw new ValidationException("Продолжительность фильма должна быть положительной");
         }
     }
 }
