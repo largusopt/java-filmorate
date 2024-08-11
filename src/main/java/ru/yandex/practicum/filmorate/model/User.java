@@ -20,7 +20,7 @@ public class User {
     @NotBlank
     private String email;
     private LocalDate birthday;
-    private Set<Long> friendId = new HashSet<>();
+    private Set<Long> friendId;
 
     public void setFriendId(Long id) {
         friendId.add(id);
