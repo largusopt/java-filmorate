@@ -16,7 +16,7 @@ public class UserControllerTest {
     private final UserStorage userStorage = new InMemoryUserStorage();
     private final User user = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
     private final User newUser = new User(null, "Savva", "userok", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16));
-    private final User userWithoutEmail = new User(1L, "Savva", "userok", "", LocalDate.of(1999, 07, 16));
+    private final User userWithoutEmail = new User(null, "Savva", "userok", "", LocalDate.of(1999, 07, 16));
     private final InMemoryUserStorage storage = new InMemoryUserStorage();
     private final UserService service = new UserService(storage);
     private final UserController controller = new UserController(storage, service);

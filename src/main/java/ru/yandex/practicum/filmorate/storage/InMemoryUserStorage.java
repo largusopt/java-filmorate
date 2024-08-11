@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class InMemoryUserStorage implements UserStorage {
     private final HashMap<Long, User> users = new HashMap<>();
-    private long id = 1L;
+    private long id = 0;
 
     @Override
     public User create(User user) {
