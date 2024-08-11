@@ -49,15 +49,15 @@ public class FilmControllerTest {
 
     @Test
     void createFilm_shouldAddAMovie() {
-        controller.create(film);
+        controller.createFilm(film);
 
         Assertions.assertEquals(1, controller.getFilms().size());
     }
 
     @Test
     void updateFilm_shouldUpdateMovieData() {
-        controller.create(film);
-        controller.update(updatedFilm);
+        controller.createFilm(film);
+        controller.createFilm(updatedFilm);
 
         Assertions.assertEquals("I cried at the end, it was very thoughtful", updatedFilm.getDescription());
         Assertions.assertEquals(1, controller.getFilms().size());
@@ -65,7 +65,7 @@ public class FilmControllerTest {
 
     @Test
     void createFilm_shouldNotAddAMovieWithDescriptionMoreThan200() {
-        Assertions.assertThrows(ValidationException.class, () -> controller.create(longDescpriptionFilm));
+        Assertions.assertThrows(ValidationException.class, () -> controller.createFilm(longDescpriptionFilm));
         Assertions.assertEquals(0, controller.getFilms().size());
     }
 
@@ -73,15 +73,15 @@ public class FilmControllerTest {
     void createFilm_shouldNotAddAMovieWithDateReleaseLessThan1895() {
         film.setReleaseDate(LocalDate.of(1892, 2, 2));
 
-        Assertions.assertThrows(ValidationException.class, () -> controller.create(film));
+        Assertions.assertThrows(ValidationException.class, () -> controller.createFilm(film));
         Assertions.assertEquals(0, controller.getFilms().size());
     }
 
     @Test
     void likeAMovie_shouldAddALikeToAMovie() {
         userStorage.create(user);
-        controller.create(film);
-        controller.addLike(film.getId(), user.getId());
+        controller.createFilm(film);
+        controller.likeAMovie(film.getId(), user.getId());
 
         Assertions.assertTrue(film.getLikesQuantity() != 0);
     }
@@ -89,9 +89,9 @@ public class FilmControllerTest {
     @Test
     void removeLike_shouldRemoveLikeFromAMovie() {
         userStorage.create(user);
-        controller.create(film);
-        controller.addLike(film.getId(), user.getId());
-        controller.deleteLike(film.getId(), user.getId());
+        controller.createFilm(film);
+        controller.likeAMovie(film.getId(), user.getId());
+        controller.removeLike(film.getId(), user.getId());
 
         Assertions.assertEquals(0, film.getLikesQuantity());
     }
@@ -99,8 +99,8 @@ public class FilmControllerTest {
     @Test
     void getPopularMovies_shouldReturnListOfPopularMovies() {
         userStorage.create(user);
-        controller.create(film);
-        controller.addLike(film.getId(), user.getId());
+        controller.createFilm(film);
+        controller.likeAMovie(film.getId(), user.getId());
         List<Film> popularMoviesList = service.topPopular(1);
 
         Assertions.assertEquals(1, popularMoviesList.size());

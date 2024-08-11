@@ -23,7 +23,7 @@ public class FilmService {
         if (film == null) {
             throw new ObjectNotFoundException("Данного фильма не существует");
         }
-        film.addLikes(userId);
+        film.addLike(userId);
         log.info("Поставлен лайк на фильм '{}' пользователем '{}'", film.getName(), userService.getUserStorage().getUsersById(userId));
     }
 
@@ -32,7 +32,7 @@ public class FilmService {
         if (film == null) {
             throw new ObjectNotFoundException("Данного фильма не существует");
         }
-        film.removeLikes(userId);
+        film.removeLike(userId);
         log.info("Лайк с фильма '{}' удален пользователем '{}'", film.getName(), userService.getUserStorage().getUsersById(userId));
     }
 
