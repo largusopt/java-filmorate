@@ -5,19 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 public class User {
-    Long id;
+    private Long id;
     @NotBlank
-    String email;
+    private String email;
     @NotBlank
-    String login;
-    String name;
-    LocalDate birthday;
-    Set<Long> friendId;
+    private String login;
+    private String name;
+    private LocalDate birthday;
+    private Set<Long> friendId = new HashSet<>();
 
     public void setFriendId(Long id) {
         friendId.add(id);
@@ -25,6 +26,10 @@ public class User {
 
     public void deleteFrindById(Long id) {
         friendId.remove(id);
+    }
+
+    public int getFriendsQuantity() {
+        return friendId.size();
     }
 }
 

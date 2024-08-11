@@ -14,19 +14,18 @@ import java.util.List;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private final HashMap<Long, User> users = new HashMap<>();
-    private long id = 1;
+    private final HashMap<Long, User> users;
+    private long id;
+
+    public InMemoryUserStorage() {
+        users = new HashMap<>();
+        id = 0L;
+    }
+
 
     @Override
     public User create(User user) {
         userValidation(user);
-        if (user.getId() == null) {
-            user.setId(id);
-            users.put(user.getId(), user);
-        } else {
-            users.put(user.getId(), user);
-            id = user.getId();
-        }
         users.put(user.getId(), user);
         log.info("'{}' был добавлен в библиотеку, индификатор пользователя'{}'", user.getName(), user.getId());
         return user;
@@ -65,16 +64,26 @@ public class InMemoryUserStorage implements UserStorage {
         return users.get(id);
     }
 
-    public void userValidation(User user) {
-        if (!user.getEmail().contains("@")) {
-            throw new ValidationException("Неккоретный email");
+    private void userValidation(User user) {
+        if (user.getBirthday().isAfter(LocalDate.now()) || user.getBirthday() == null) {
+            throw new ValidationException("Неккоректная дата рождения пользователя c ID '" + user.getId() + "'");
+        }
+        if (user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
+            throw new ValidationException("неккоректный  email пользователя с ID '" + user.getId() + "'");
         }
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
-            log.info("Имя пользователя с идентификатором '{}' было установлена на '{}'", user.getId(), user.getLogin());
+            log.info("ИМЯ ПОЛЬЗОВАТЕЛЯ С ИДЕНТИФИКАТОРОМ '{}' УСТАНОВЛЕНО на '{}'", user.getId(), user.getName());
         }
-        if (user.getBirthday() == null || user.getBirthday().isAfter(LocalDate.now())) {
-            throw new ValidationException("Неккоретная дата рождения");
+        if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
+            throw new ValidationException("Неккоректный логин пользователя с идентификатором '" + user.getId() + "'");
+        }
+        //if (user.getFriendId() == null) {
+        //  user.setFriendId(new HashSet<Long>());
+        //}
+        if (user.getId() == null || user.getId() <= 0) {
+            user.setId(++id);
+            log.info("'{}' идентификатор был установлен на '{}'", user.getEmail(), user.getId());
         }
     }
 }

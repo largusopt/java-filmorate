@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -66,13 +67,25 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public void filmValidation(Film film) {
-        if (film.getDescription().length() > 200 || film.getDescription().isEmpty()) {
-            throw new ValidationException("Описание должно быть не более 200 символов/ не может быть равно 0");
+        if (film.getReleaseDate() == null ||
+                film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+            throw new ValidationException("Incorrect release date");
         }
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            throw new ValidationException("Некоретная дата фильма");
+        if (film.getName().isEmpty() || film.getName().isBlank()) {
+            throw new ValidationException("Attempt to set an empty movie name");
+        }
+        if (film.getDuration() <= 0) {
+            throw new ValidationException("Attempt to set duration less than zero");
+        }
+        if (film.getDescription().length() > 200 || film.getDescription().length() == 0) {
+            throw new ValidationException("Description increases 200 symbols or empty");
+        }
+        if (film.getId() == null || film.getId() <= 0) {
+            film.setId(++id);
+            log.info("Movie identifier was set as '{}", film.getId());
+        }
+        if (film.getLikes() == null) {
+            film.setLikes(new HashSet<>());
         }
     }
-
-
 }
