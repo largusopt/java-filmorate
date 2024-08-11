@@ -99,12 +99,13 @@ public class UserControllerTest {
         Assertions.assertEquals(0, user.getFriendId().size());
         Assertions.assertEquals(0, newUser.getFriendId().size());
     }
+
     @Test
     void getFriend() {
         controller.create(user);
         controller.create(newUser);
         controller.addFriend(user.getId(), newUser.getId());
-        List<User> fr=controller.showFriends(user.getId());
+        List<User> fr = controller.showFriends(user.getId());
         //Assertions.assertEquals(1, user.getFriendId().size());
         //Assertions.assertEquals(0, newUser.getFriendId().size());
     }
