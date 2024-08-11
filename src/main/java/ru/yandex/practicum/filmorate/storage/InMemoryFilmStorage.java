@@ -15,11 +15,18 @@ import java.util.List;
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     private final HashMap<Long, Film> films = new HashMap<Long, Film>();
+    private long id = 0;
 
     @Override
     public Film createFilm(Film film) {
         filmValidation(film);
-        films.put(film.getId(), film);
+        if (film.getId() == null) {
+            film.setId(id);
+            films.put(film.getId(), film);
+        } else {
+            films.put(film.getId(), film);
+            id = film.getId();
+        }
         log.info("'{}' был добавлен в библиотеку, индификатор фильма'{}'", film.getName(), film.getId());
         return film;
     }
