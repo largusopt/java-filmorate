@@ -11,13 +11,12 @@ import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 
 public class UserControllerTest {
     private final UserStorage userStorage = new InMemoryUserStorage();
-    private final User user = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16),new HashSet<>());
-    private final User newUser = new User(null, "Savva", "userok", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16), new HashSet<>());
-    private final User userWithoutEmail = new User(1L, "Savva", "userok", "", LocalDate.of(1999, 07, 16), new HashSet<>());
+    private final User user = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
+    private final User newUser = new User(null, "Savva", "userok", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16));
+    private final User userWithoutEmail = new User(1L, "Savva", "userok", "", LocalDate.of(1999, 07, 16));
     private final InMemoryUserStorage storage = new InMemoryUserStorage();
     private final UserService service = new UserService(storage);
     private final UserController controller = new UserController(storage, service);
@@ -35,7 +34,7 @@ public class UserControllerTest {
 
     @Test
     void update_shouldUpdateUser() {
-        User thisUser = new User(2L, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16), new HashSet<>());
+        User thisUser = new User(2L, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.create(user);
         controller.update(thisUser);
         Assertions.assertEquals("tata.52@ya.ru", thisUser.getEmail());
@@ -45,7 +44,7 @@ public class UserControllerTest {
 
     @Test
     void create_shouldCreateUserIfNameIsEmpty() {
-        User thisUser = new User(1L, "", "userok", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16), new HashSet<>());
+        User thisUser = new User(1L, "", "userok", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.create(thisUser);
         Assertions.assertEquals("userok", thisUser.getName());
         Assertions.assertEquals(1, controller.getUsers().size());
@@ -53,9 +52,9 @@ public class UserControllerTest {
 
     @Test
     void create_shouldCreateUserIfIdIsEmpty() {
-        User thisUser = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16), new HashSet<>());
+        User thisUser = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.create(thisUser);
-        User tanya = new User(null, "Savva", "culcurry", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16), new HashSet<>());
+        User tanya = new User(null, "Savva", "culcurry", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.create(tanya);
         Assertions.assertEquals(2, thisUser.getId());
         Assertions.assertEquals(3, tanya.getId());

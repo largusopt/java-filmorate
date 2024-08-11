@@ -1,17 +1,17 @@
 package ru.yandex.practicum.filmorate.model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
+@NoArgsConstructor
 public class User {
-    @Positive
     private Long id;
     private String name;
     @NotBlank
@@ -19,7 +19,16 @@ public class User {
     @NotBlank
     private String email;
     private LocalDate birthday;
-    private Set<Long> friendId;
+    private Set<Long> friendId = new HashSet<>();
+
+    public User(Long id, String name, String login, String email, LocalDate birthday) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.birthday = birthday;
+
+    }
 
     public void setFriendId(Long id) {
         friendId.add(id);

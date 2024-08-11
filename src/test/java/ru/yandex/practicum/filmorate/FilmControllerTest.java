@@ -34,7 +34,7 @@ public class FilmControllerTest {
     private final Film negativeDurationFilm = new Film(1L, "Movie",
             "The most awesome movie I've ever seen",
             LocalDate.of(2020, 2, 2), -15, new HashSet<>());
-    private final User user = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16), new HashSet<>());
+    private final User user = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
     private FilmStorage storage = new InMemoryFilmStorage();
     private UserStorage userStorage = new InMemoryUserStorage();
     private UserService userService = new UserService(userStorage);
