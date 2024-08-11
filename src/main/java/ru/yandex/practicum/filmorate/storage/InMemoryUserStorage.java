@@ -25,7 +25,6 @@ public class InMemoryUserStorage implements UserStorage {
             log.info("'{}' идентификатор был установлен на '{}'", user.getEmail(), user.getId());
         }
         users.put(user.getId(), user);
-        id = user.getId();
         log.info("'{}' был добавлен в библиотеку, индификатор пользователя'{}'", user.getName(), user.getId());
         return user;
     }
