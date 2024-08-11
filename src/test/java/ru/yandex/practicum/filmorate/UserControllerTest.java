@@ -34,8 +34,8 @@ public class UserControllerTest {
 
     @Test
     void update_shouldUpdateUser() {
-        User thisUser = new User(2L, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.create(user);
+        User thisUser = new User(user.getId(), "Tanya", "user", "tata.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.update(thisUser);
         Assertions.assertEquals("tata.52@ya.ru", thisUser.getEmail());
         Assertions.assertEquals(user.getId(), thisUser.getId());
@@ -56,8 +56,8 @@ public class UserControllerTest {
         controller.create(thisUser);
         User tanya = new User(null, "Savva", "culcurry", "mtv.52@ya.ru", LocalDate.of(1999, 07, 16));
         controller.create(tanya);
-        Assertions.assertEquals(2, thisUser.getId());
-        Assertions.assertEquals(3, tanya.getId());
+        Assertions.assertEquals(1, thisUser.getId());
+        Assertions.assertEquals(2, tanya.getId());
         Assertions.assertEquals(2, controller.getUsers().size());
     }
 
