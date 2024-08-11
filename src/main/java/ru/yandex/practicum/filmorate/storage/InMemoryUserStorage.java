@@ -19,8 +19,7 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User create(User user) {
         userValidation(user);
-        long id = user.getId();
-        users.put(++id, user);
+        users.put(user.getId(), user);
         log.info("'{}' был добавлен в библиотеку, индификатор пользователя'{}'", user.getName(), user.getId());
         return user;
     }
@@ -51,7 +50,8 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User getUsersById(Long id) {
-        if (!users.containsKey(id)) {
+        User user = users.get(id);
+        if (user == null) {
             throw new ObjectNotFoundException("Пользователь не найден");
         }
         return users.get(id);

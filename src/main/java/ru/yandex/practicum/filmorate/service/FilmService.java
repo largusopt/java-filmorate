@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.Comparator;
@@ -23,7 +24,12 @@ public class FilmService {
         if (film == null) {
             throw new ObjectNotFoundException("Данного фильма не существует");
         }
+        User user = userService.getUserStorage().getUsersById(userId);
+        if (user == null) {
+            throw new ObjectNotFoundException("Данного пользователя не существует");
+        }
         film.addLike(userId);
+        filmStorage.updateFilm(film);
         log.info("Поставлен лайк на фильм '{}' пользователем '{}'", film.getName(), userService.getUserStorage().getUsersById(userId));
     }
 

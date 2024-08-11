@@ -45,7 +45,7 @@ public class FilmController {
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public void likeAMovie(@PathVariable Long id, @PathVariable Long userId) {
+    public void addLike(@PathVariable Long id, @PathVariable Long userId) {
         filmService.addLike(id, userId);
     }
 

@@ -81,16 +81,15 @@ public class FilmControllerTest {
     void likeAMovie_shouldAddALikeToAMovie() {
         userStorage.create(user);
         controller.createFilm(film);
-        controller.likeAMovie(film.getId(), user.getId());
-
-        Assertions.assertTrue(film.getLikesQuantity() != 0);
+        controller.addLike(film.getId(), user.getId());
+        Assertions.assertEquals(1, film.getLikesQuantity());
     }
 
     @Test
     void removeLike_shouldRemoveLikeFromAMovie() {
         userStorage.create(user);
         controller.createFilm(film);
-        controller.likeAMovie(film.getId(), user.getId());
+        controller.addLike(film.getId(), user.getId());
         controller.removeLike(film.getId(), user.getId());
 
         Assertions.assertEquals(0, film.getLikesQuantity());
@@ -100,7 +99,7 @@ public class FilmControllerTest {
     void getPopularMovies_shouldReturnListOfPopularMovies() {
         userStorage.create(user);
         controller.createFilm(film);
-        controller.likeAMovie(film.getId(), user.getId());
+        controller.addLike(film.getId(), user.getId());
         List<Film> popularMoviesList = service.topPopular(1);
 
         Assertions.assertEquals(1, popularMoviesList.size());
