@@ -16,9 +16,9 @@ public class User {
     private Long id;
     @NotBlank
     private String email;
+    private String name;
     @NotBlank
     private String login;
-    private String name;
     private LocalDate birthday;
     private Set<Long> friendId = new HashSet<>();
 
