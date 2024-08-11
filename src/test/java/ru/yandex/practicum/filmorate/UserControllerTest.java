@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class UserControllerTest {
     private final UserStorage userStorage = new InMemoryUserStorage();
-    private final User user = new User(1L, "mtv.52@ya.ru", "user", "user", LocalDate.of(1999, 07, 16), new HashSet<>());
+    private final User user = new User(1L,"mtv.52@ya.ru", "user", "user", LocalDate.of(1999, 07, 16), new HashSet<>());
     private final User newUser = new User(2L, "mvm.52@ya.ru", "frinend", "Ole", LocalDate.of(2000, 07, 16), new HashSet<>());
     private final User userWithoutEmail = new User(1L, "", "user", "user", LocalDate.of(1999, 07, 16), new HashSet<>());
     private final InMemoryUserStorage storage = new InMemoryUserStorage();
@@ -49,6 +49,16 @@ public class UserControllerTest {
         controller.create(thisUser);
         Assertions.assertEquals("user", thisUser.getName());
         Assertions.assertEquals(1, controller.getUsers().size());
+    }
+    @Test
+    void create_shouldCreateUserIfIdIsEmpty() {
+        User thisUser = new User(null, "tata.52@ya.ru", "user", null, LocalDate.of(1999, 07, 16), new HashSet<>());
+        controller.create(thisUser);
+        User tanya = new User(null, "tata.52@ya.ru", "Tanya", null, LocalDate.of(1999, 07, 16), new HashSet<>());
+        controller.create(tanya);
+        Assertions.assertEquals(1, thisUser.getId());
+        Assertions.assertEquals(2, tanya.getId());
+        Assertions.assertEquals(2, controller.getUsers().size());
     }
 
     @Test
