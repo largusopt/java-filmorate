@@ -40,7 +40,7 @@ public class FilmService {
         }
         User user = userService.getUserStorage().getUsersById(userId);
         if (user == null) {
-            throw new ObjectNotFoundException("Данного фильма не существует");
+            throw new ObjectNotFoundException("Данного пользователя не существует");
         }
         film.removeLike(userId);
         log.info("Лайк с фильма '{}' удален пользователем '{}'", film.getName(), userService.getUserStorage().getUsersById(userId));

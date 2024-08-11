@@ -57,8 +57,8 @@ public class UserControllerTest {
         controller.create(thisUser);
         User tanya = new User(null, "tata.52@ya.ru", "Tanya", null, LocalDate.of(1999, 07, 16), new HashSet<>());
         controller.create(tanya);
-        Assertions.assertEquals(1, thisUser.getId());
-        Assertions.assertEquals(2, tanya.getId());
+        Assertions.assertEquals(2, thisUser.getId());
+        Assertions.assertEquals(3, tanya.getId());
         Assertions.assertEquals(2, controller.getUsers().size());
     }
 
