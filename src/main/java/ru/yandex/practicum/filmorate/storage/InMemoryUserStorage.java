@@ -14,12 +14,12 @@ import java.util.List;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private HashMap<Long, User> users = new HashMap<>();
+    private final HashMap<Long, User> users = new HashMap<>();
 
     @Override
     public User create(User user) {
         userValidation(user);
-        long id=user.getId();
+        long id = user.getId();
         users.put(++id, user);
         log.info("'{}' был добавлен в библиотеку, индификатор пользователя'{}'", user.getName(), user.getId());
         return user;
@@ -34,7 +34,7 @@ public class InMemoryUserStorage implements UserStorage {
     public User update(User user) {
         if (users.containsKey(user.getId())) {
             userValidation(user);
-            users.put((long) user.getId(), user);
+            users.put(user.getId(), user);
             log.info("'{}'пользователь был успешно обновлен, идентификатор пользователя '{}'", user.getName(), user.getId());
             return user;
         } else {
