@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 public class User {
+    @Positive
     private Long id;
     @NotBlank
     private String email;
