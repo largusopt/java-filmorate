@@ -14,15 +14,14 @@ import java.util.List;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private final HashMap<Long, User> users= new HashMap<>();
-    private long id=0;
-
+    private final HashMap<Long, User> users = new HashMap<>();
+    private long id = 0;
 
     @Override
     public User create(User user) {
         userValidation(user);
         users.put(user.getId(), user);
-        id=user.getId();
+        id = user.getId();
         log.info("'{}' был добавлен в библиотеку, индификатор пользователя'{}'", user.getName(), user.getId());
         return user;
     }
