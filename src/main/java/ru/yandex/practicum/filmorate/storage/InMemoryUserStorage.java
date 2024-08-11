@@ -15,10 +15,18 @@ import java.util.List;
 @Component
 public class InMemoryUserStorage implements UserStorage {
     private final HashMap<Long, User> users = new HashMap<>();
+    private long id = 1l;
 
     @Override
     public User create(User user) {
         userValidation(user);
+        if (user.getId() == null) {
+            user.setId(id);
+            users.put(user.getId(), user);
+        } else {
+            users.put(user.getId(), user);
+            id = user.getId();
+        }
         users.put(user.getId(), user);
         log.info("'{}' был добавлен в библиотеку, индификатор пользователя'{}'", user.getName(), user.getId());
         return user;
