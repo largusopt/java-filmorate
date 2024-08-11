@@ -8,6 +8,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,8 +31,6 @@ public class UserService {
         }
         friend.setFriendId(userId);
         user.setFriendId(friendId);
-        userStorage.update(user);
-        userStorage.update(friend);
         log.info("{} был добавлен в друзья к пользлвателю {}", userStorage.getUsersById(friendId), userStorage.getUsersById(userId));
 
     }
@@ -43,10 +42,17 @@ public class UserService {
     }
 
     public List<User> showFriends(Long userId) {
-        Set<Long> id = userStorage.getUsersById(userId).getFriendId(); //вывела список id друзей
-        if (id.isEmpty()) {
-            throw new ObjectNotFoundException("Список друзей пользователя '" + userId + "' пуст");
-        } else return id.stream()
+        User user = userStorage.getUsersById(userId);
+        if (user == null) {
+            throw new ObjectNotFoundException("Пользователь с ID '" + userId + "' не найден");
+        }
+
+        Set<Long> friendIds = user.getFriendId(); // Получаем список ID друзей
+
+        if (friendIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return friendIds.stream()
                 .map(userStorage::getUsersById)
                 .collect(Collectors.toList());
     }

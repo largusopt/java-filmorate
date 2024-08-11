@@ -11,6 +11,7 @@ import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class UserControllerTest {
     private final UserStorage userStorage = new InMemoryUserStorage();
@@ -97,5 +98,14 @@ public class UserControllerTest {
         controller.deleteFriendById(user.getId(), newUser.getId());
         Assertions.assertEquals(0, user.getFriendId().size());
         Assertions.assertEquals(0, newUser.getFriendId().size());
+    }
+    @Test
+    void getFriend() {
+        controller.create(user);
+        controller.create(newUser);
+        controller.addFriend(user.getId(), newUser.getId());
+        List<User> fr=controller.showFriends(user.getId());
+        //Assertions.assertEquals(1, user.getFriendId().size());
+        //Assertions.assertEquals(0, newUser.getFriendId().size());
     }
 }

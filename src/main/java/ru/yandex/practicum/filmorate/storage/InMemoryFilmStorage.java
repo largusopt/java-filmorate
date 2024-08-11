@@ -39,7 +39,7 @@ public class InMemoryFilmStorage implements FilmStorage {
             films.put(film.getId(), film);
             log.info("'{}'фильм был успешно обновлен, идентификатор фильма '{}'", film.getName(), film.getId());
         } else {
-            throw new ValidationException("Невозможно обновить несуществующий фильм");
+            throw new ObjectNotFoundException("Невозможно обновить несуществующий фильм");
         }
         return film;
     }
