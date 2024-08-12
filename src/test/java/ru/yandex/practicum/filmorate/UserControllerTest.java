@@ -77,8 +77,8 @@ public class UserControllerTest {
 
     @Test
     void create_shouldThrowExceptionIfDateIsAfterNow() {
-        user.setBirthday(LocalDate.of(2030, 07, 16));
-        Assertions.assertThrows(ValidationException.class, () -> controller.create(user));
+        final User userok = new User(null, "Tanya", "user", "tata.52@ya.ru", LocalDate.of(2030, 07, 16));
+        Assertions.assertThrows(ValidationException.class, () -> controller.create(userok));
         Assertions.assertEquals(0, controller.getUsers().size());
     }
 

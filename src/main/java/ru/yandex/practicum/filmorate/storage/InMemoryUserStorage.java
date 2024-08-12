@@ -78,9 +78,7 @@ public class InMemoryUserStorage implements UserStorage {
         if (user.getLogin().isBlank() || user.getLogin().isEmpty()) {
             throw new ValidationException("Неккоректный логин пользователя с идентификатором '" + user.getId() + "'");
         }
-        //if (user.getFriendId() == null) {
-        //  user.setFriendId(new HashSet<Long>());
-        //}
+
         if (user.getId() == null || user.getId() <= 0) {
             user.setId(++id);
             log.info("Идентификатор пользователя '{}", user.getId());
