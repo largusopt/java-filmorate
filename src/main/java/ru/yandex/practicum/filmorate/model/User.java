@@ -36,7 +36,7 @@ public class User {
 
     public void setFriendId(Long id) {
         friendId.add(id);
-    }//я добавила аннотации, и добавила обработчик исключений, но почему то не работает выброс нужной мне ошибки
+    } //я добавила аннотации, и добавила обработчик исключений, но почему то не работает выброс нужной мне ошибки
 
     public void deleteFrindById(Long id) {
         friendId.remove(id);
